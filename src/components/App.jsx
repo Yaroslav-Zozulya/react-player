@@ -1,5 +1,6 @@
 export const App = () => {
   console.log('test log');
+  console.log(test);
   return (
     <div
       style={{
