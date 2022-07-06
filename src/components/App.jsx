@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import VideoList from './VideoList';
-import Player from './Player';
+import { VideoList } from './VideoList';
+import { Player } from './Player';
 import videos from '../data/videos';
 
 export class App extends Component {
