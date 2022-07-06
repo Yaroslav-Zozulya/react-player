@@ -3,7 +3,7 @@ const VideoList = ({ videos, onSelect }) => {
     <ul>
       {videos.map(video => (
         <li key={video.id}>
-          <a onClick={() => onSelect(video.link)} href="#">
+          <a onClick={() => onSelect(video.link)} href={video.link}>
             {video.link}
           </a>
         </li>
