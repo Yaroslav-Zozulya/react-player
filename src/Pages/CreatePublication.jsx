@@ -1,9 +1,14 @@
 import { Formik, Form, Field } from 'formik';
 import { addPublication } from 'services/publicationsApi';
+
 export const CreatePublication = () => {
   const handleSubmit = async (values, { resetForm }) => {
-    addPublication(values);
-    resetForm();
+    try {
+      addPublication(values);
+      resetForm();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

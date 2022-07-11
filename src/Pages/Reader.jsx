@@ -1,67 +1,67 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import { Controls } from 'components/Reader/Controls';
 import { Progress } from 'components/Reader/Progress';
 import { Publication } from 'components/Reader/Publication';
-import { getPublications } from 'services/publicationsApi';
+import { getPublications, deletePublication } from 'services/publicationsApi';
 
-export class Reader extends Component {
-  state = {
-    index: 0,
-    items: [],
-    isLoading: false,
+export const Reader = () => {
+  const [index, setIndex] = useState(0);
+  const [items, setItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const changeIndex = value => {
+    setIndex(prevIndex => prevIndex + value);
   };
 
-  changeIndex = value => {
-    this.setState(state => ({ index: state.index + value }));
-  };
-
-  async componentDidMount() {
+  const deleteItem = async () => {
+    const currentItem = items[index];
     try {
-      this.setState({ isLoading: true });
-      const items = await getPublications();
-      this.setState({ isLoading: false, items });
+      await deletePublication(currentItem.id);
+      setItems(prevItems =>
+        prevItems.filter(item => item.id !== currentItem.id)
+      );
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  // componentDidMount() {
-  //   const saveState = localStorage.getItem(LS_KEY);
-  //   if (saveState) {
-  //     const index = Number(localStorage.getItem(LS_KEY));
-  //     this.setState({ index });
-  //   }
-  // }
+  useEffect(() => {
+    const fetchPublications = async () => {
+      try {
+        setIsLoading(true);
+        const items = await getPublications();
+        setIsLoading(false);
+        setItems(items);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchPublications();
+  }, []);
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.index !== this.state.index) {
-  //     localStorage.setItem(LS_KEY, this.state.index);
-  //   }
-  // }
+  const totalItems = items.length;
+  const currentItem = items[index];
+  const showPlaceholder = !isLoading && totalItems === 0;
+  const showReaderUI = !isLoading && totalItems > 0;
 
-  render() {
-    const { index, items, isLoading } = this.state;
-    const totalItems = items.length;
-    const currentItem = items[index];
-    const showPlaceholder = !isLoading && totalItems === 0;
-    const showReaderUI = !isLoading && totalItems > 0;
-
-    return (
-      <div style={{ padding: 24 }}>
-        {isLoading && <div>Laoding...</div>}
-        {showPlaceholder && <div>Ещё нет публикаций!</div>}
-        {showReaderUI && (
-          <>
-            <Controls
-              currentItem={index + 1}
-              totalItems={totalItems}
-              onChange={this.changeIndex}
-            />
-            <Progress currentPage={index + 1} totalPages={totalItems} />
-            <Publication title={currentItem.title} text={currentItem.text} />
-          </>
-        )}
-      </div>
-    );
-  }
-}
+  return (
+    <div style={{ padding: 24 }}>
+      {isLoading && <div>Laoding...</div>}
+      {showPlaceholder && <div>Ещё нет публикаций!</div>}
+      {showReaderUI && (
+        <>
+          <button type="button" onClick={deleteItem}>
+            Удалить публикацию
+          </button>
+          <Controls
+            currentItem={index + 1}
+            totalItems={totalItems}
+            onChange={changeIndex}
+          />
+          <Progress currentPage={index + 1} totalPages={totalItems} />
+          <Publication title={currentItem.title} text={currentItem.text} />
+        </>
+      )}
+    </div>
+  );
+};

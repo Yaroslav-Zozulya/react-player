@@ -4,6 +4,7 @@ import { GlobalStyles } from './components/GlobalStyles';
 import { Reader } from './Pages/Reader';
 import { CreatePublication } from './Pages/CreatePublication';
 import './index.css';
+// import { App } from 'components/Player/App';
 import publications from 'data/publications.json';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';

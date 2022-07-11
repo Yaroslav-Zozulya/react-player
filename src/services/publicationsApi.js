@@ -11,3 +11,7 @@ export const addPublication = async data => {
   const response = await axios.post('/publication', data);
   return response.data;
 };
+export const deletePublication = async id => {
+  const response = await axios.delete(`/publication/${id}`);
+  return response.data;
+};
