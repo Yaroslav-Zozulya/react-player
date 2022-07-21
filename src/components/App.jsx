@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 // import { PublicationEditor } from './PublicationEditor/PublicationEditor';
 // import { VideoPlayer } from './VideoPlayer/VideoPlayer';
 import { Layout } from './Layout/Layout';
-import { ListPage } from 'Pages/ListPage';
+import { ListPage } from 'pages';
 import '../index.css';
 
 export const App = () => {
