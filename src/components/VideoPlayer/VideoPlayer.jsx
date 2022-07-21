@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { VideoList } from './VideoList';
-import { Player } from './Player/Player';
-import videos from './data/videos';
+import { VideoList } from '../VideoList';
+import { Player } from '../Player';
+import videos from 'data/videos';
 
-export const App = () => {
+export const VideoPlayer = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   return (

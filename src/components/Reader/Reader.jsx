@@ -26,7 +26,6 @@ export const Reader = () => {
   };
 
   useEffect(() => {
-    console.log('some words');
     const fetchPublications = async () => {
       try {
         setIsLoading(true);
