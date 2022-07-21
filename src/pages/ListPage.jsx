@@ -7,6 +7,7 @@ export const ListPage = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    console.log('some text');
     const fetchPublications = async () => {
       setLoading(true);
       try {
